@@ -34,4 +34,9 @@ public class BatchImportSimRequest {
     @NotEmpty(message = "SIM卡列表不能为空")
     private List<SimExService> simList;
 
+    /**
+     * 批次号
+     */
+    private String batchNum;
+
 }
