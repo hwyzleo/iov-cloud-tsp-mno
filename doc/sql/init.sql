@@ -21,3 +21,27 @@ CREATE TABLE `db_mno`.`tb_sim`
     UNIQUE KEY (`iccid`)
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8mb4 COMMENT ='SIM卡信息表';
+
+DROP TABLE IF EXISTS `db_mno`.`tb_vehicle_network`;
+CREATE TABLE `db_mno`.`tb_vehicle_network`
+(
+    `id`            BIGINT      NOT NULL AUTO_INCREMENT COMMENT '主键',
+    `vin`           VARCHAR(20) NOT NULL COMMENT '车架号',
+    `iccid1`        VARCHAR(50)          DEFAULT NULL COMMENT '集成电路卡识别码1',
+    `iccid1_online` TINYINT              DEFAULT 0 COMMENT '卡1在线状态',
+    `iccid2`        VARCHAR(50)          DEFAULT NULL COMMENT '集成电路卡识别码2',
+    `iccid2_online` TINYINT              DEFAULT 0 COMMENT '卡2在线状态',
+    `package_code`  VARCHAR(50)          DEFAULT NULL COMMENT '网联套餐编码',
+    `binding`       TINYINT     NOT NULL COMMENT '绑定状态：0-已解绑，1-已绑定',
+    `auth`          TINYINT     NOT NULL COMMENT '实名认证状态：0-未认证，1-已认证',
+    `description`   VARCHAR(255)         DEFAULT NULL COMMENT '备注',
+    `create_time`   TIMESTAMP   NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+    `create_by`     VARCHAR(64)          DEFAULT NULL COMMENT '创建者',
+    `modify_time`   TIMESTAMP   NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '修改时间',
+    `modify_by`     VARCHAR(64)          DEFAULT NULL COMMENT '修改者',
+    `row_version`   INT                  DEFAULT 1 COMMENT '记录版本',
+    `row_valid`     TINYINT              DEFAULT 1 COMMENT '记录是否有效',
+    PRIMARY KEY (`id`),
+    UNIQUE KEY (`vin`)
+) ENGINE = InnoDB
+  DEFAULT CHARSET = utf8mb4 COMMENT ='车辆网联信息表';
