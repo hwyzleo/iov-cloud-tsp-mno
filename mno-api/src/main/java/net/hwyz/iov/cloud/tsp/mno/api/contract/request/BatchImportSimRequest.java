@@ -1,7 +1,7 @@
 package net.hwyz.iov.cloud.tsp.mno.api.contract.request;
 
-import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -25,7 +25,7 @@ public class BatchImportSimRequest {
     /**
      * 运营商类型
      */
-    @NotBlank(message = "运营商类型不能为空")
+    @NotNull(message = "运营商类型不能为空")
     private MnoType mnoType;
 
     /**
