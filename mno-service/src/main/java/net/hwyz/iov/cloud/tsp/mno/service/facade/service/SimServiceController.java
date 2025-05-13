@@ -32,7 +32,7 @@ public class SimServiceController {
     @PostMapping("/batchImport")
     public void batchImport(@RequestBody @Validated BatchImportSimRequest request) {
         logger.info("批量导入运营商[{}]SIM卡信息[{}]", request.getMnoType(), request.getSimList().size());
-        simAppService.batchImport(request.getMnoType(), SimExServiceAssembler.INSTANCE.toPoList(request.getSimList()));
+        simAppService.batchImport(request.getBatchNum(), request.getMnoType(), SimExServiceAssembler.INSTANCE.toPoList(request.getSimList()));
     }
 
 }

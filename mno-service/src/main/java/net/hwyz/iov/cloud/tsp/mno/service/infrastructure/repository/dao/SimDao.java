@@ -15,4 +15,12 @@ import org.apache.ibatis.annotations.Mapper;
 @Mapper
 public interface SimDao extends BaseDao<SimPo, Long> {
 
+    /**
+     * 根据ICCID查询SIM卡信息
+     *
+     * @param iccid ICCID
+     * @return SIM卡信息
+     */
+    SimPo selectByIccid(String iccid);
+
 }
