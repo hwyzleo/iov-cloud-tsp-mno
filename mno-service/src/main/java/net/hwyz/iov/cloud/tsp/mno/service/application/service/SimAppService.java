@@ -6,6 +6,8 @@ import lombok.extern.slf4j.Slf4j;
 import net.hwyz.iov.cloud.tsp.mno.api.contract.enums.MnoType;
 import net.hwyz.iov.cloud.tsp.mno.service.domain.contract.enums.SimState;
 import net.hwyz.iov.cloud.tsp.mno.service.infrastructure.repository.dao.SimDao;
+import net.hwyz.iov.cloud.tsp.mno.service.infrastructure.repository.dao.SimLogDao;
+import net.hwyz.iov.cloud.tsp.mno.service.infrastructure.repository.po.SimLogPo;
 import net.hwyz.iov.cloud.tsp.mno.service.infrastructure.repository.po.SimPo;
 import org.springframework.stereotype.Service;
 
@@ -22,6 +24,7 @@ import java.util.List;
 public class SimAppService {
 
     private final SimDao simDao;
+    private final SimLogDao simLogDao;
 
     /**
      * 批量导入SIM卡信息
@@ -39,10 +42,28 @@ public class SimAppService {
                 simPo.setSmsAbility(true);
                 simPo.setVoiceAbility(true);
                 simDao.insertPo(simPo);
+                recordLog(simPo, "数据导入");
             } else {
                 logger.warn("数据批次[{}]SIM卡[{}]已存在", batchNum, simPo.getIccid());
             }
         }
+    }
+
+    /**
+     * 记录SIM卡变更日志
+     *
+     * @param simPo  SIM卡对象
+     * @param remark 变更备注
+     */
+    private void recordLog(SimPo simPo, String remark) {
+        simLogDao.insertPo(SimLogPo.builder()
+                .iccid(simPo.getIccid())
+                .simState(simPo.getSimState())
+                .smsAbility(simPo.getSmsAbility())
+                .dataAbility(simPo.getDataAbility())
+                .voiceAbility(simPo.getVoiceAbility())
+                .description(remark)
+                .build());
     }
 
 }
