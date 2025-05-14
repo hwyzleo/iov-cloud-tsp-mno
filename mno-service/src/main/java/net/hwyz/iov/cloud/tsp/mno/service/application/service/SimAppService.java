@@ -42,7 +42,7 @@ public class SimAppService {
                 simPo.setSmsAbility(true);
                 simPo.setVoiceAbility(true);
                 simDao.insertPo(simPo);
-                recordLog(simPo, "数据导入");
+                recordLog(simPo, "数据批次[" + batchNum + "]数据导入");
             } else {
                 logger.warn("数据批次[{}]SIM卡[{}]已存在", batchNum, simPo.getIccid());
             }
