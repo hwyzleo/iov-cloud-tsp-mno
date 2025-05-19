@@ -9,6 +9,7 @@ import net.hwyz.iov.cloud.tsp.mno.service.infrastructure.repository.dao.VehicleN
 import net.hwyz.iov.cloud.tsp.mno.service.infrastructure.repository.po.VehicleNetworkLogPo;
 import net.hwyz.iov.cloud.tsp.mno.service.infrastructure.repository.po.VehicleNetworkPo;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * 车辆网联信息应用服务类
@@ -28,6 +29,7 @@ public class VehicleNetworkAppService {
      *
      * @param vehicleNetworkPo 车辆网联信息
      */
+    @Transactional(rollbackFor = Exception.class)
     public void create(VehicleNetworkPo vehicleNetworkPo) {
         if (ObjUtil.isNotNull(vehicleNetworkDao.selectByVin(vehicleNetworkPo.getVin()))) {
             throw new VehicleNetworkHasExistException(vehicleNetworkPo.getVin());
@@ -48,6 +50,7 @@ public class VehicleNetworkAppService {
      */
     private void recordLog(VehicleNetworkPo vehicleNetworkPo, String remark) {
         vehicleNetworkLogDao.insertPo(VehicleNetworkLogPo.builder()
+                .vin(vehicleNetworkPo.getVin())
                 .iccid1(vehicleNetworkPo.getIccid1())
                 .iccid2(vehicleNetworkPo.getIccid2())
                 .packageCode(vehicleNetworkPo.getPackageCode())
